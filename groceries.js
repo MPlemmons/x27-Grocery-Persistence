@@ -1,36 +1,9 @@
 var myList = [];
+window.onload = loadCookieList;
 function addItem()
 {
-
   var input = document.getElementById("newItem").value;
-  if(myList.indexOf(input) == -1)
-  {
-
-    var list = document.getElementById("listDisplay");
-    var item = document.createElement("li");
-
-    var itemName = document.createTextNode(input);
-    myList.push(input);
-    for(i=0; i<myList.length; i++)
-    {
-    console.log(myList[i]);
-    }
-    var btnClose = btnClose = document.createElement("button");
-    btnClose.classList.add("btn");
-    btnClose.classList.add("btn-danger");
-    btnClose.classList.add("btn-xs");
-
-    var iconClose = document.createElement("span");
-    iconClose.classList.add("glyphicon");
-    iconClose.classList.add("glyphicon-remove");
-    btnClose.addEventListener("click", removeParentListItem);
-    btnClose.appendChild(iconClose);
-    item.appendChild(btnClose);
-    item.appendChild(itemName);
-    item.appendChild(btnClose);
-    list.appendChild(item);
-    document.getElementById("newItem").value = "";
-  }
+  displayItem(input);
 }
 
 function removeParentListItem()
@@ -58,6 +31,44 @@ function clearList()
 {
   document.getElementById("listDisplay").innerHTML = "";
   myList = [];
+}
+
+function displayItem(input){
+  if(myList.indexOf(input) == -1)
+  {
+    var list = document.getElementById("listDisplay");
+    var item = document.createElement("li");
+    var itemName = document.createTextNode(input);
+    myList.push(input);
+    for(i=0; i<myList.length; i++)
+    {
+    console.log(myList[i]);
+    }
+    var btnClose = btnClose = document.createElement("button");
+    btnClose.classList.add("btn");
+    btnClose.classList.add("btn-danger");
+    btnClose.classList.add("btn-xs");
+    var iconClose = document.createElement("span");
+    iconClose.classList.add("glyphicon");
+    iconClose.classList.add("glyphicon-remove");
+    btnClose.addEventListener("click", removeParentListItem);
+    btnClose.appendChild(iconClose);
+    item.appendChild(btnClose);
+    item.appendChild(itemName);
+    item.appendChild(btnClose);
+    list.appendChild(item);
+    document.getElementById("newItem").value = "";
+  }
+}
+
+function loadCookieList()
+{
+  var cookieList = getCookie("myCookie");
+  var arrayCookie = cookieList.split(",");
+  for(var i = 0; i < arrayCookie.length; i++)
+  {
+    displayItem(arrayCookie[i]);
+  }
 }
 //courtesy of w3schools, from: http://www.w3schools.com/js/js_cookies.asp
 function setCookie(cname, cvalue, exdays) {
